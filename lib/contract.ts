@@ -49,7 +49,7 @@ export async function getCampaignState() {
     throw new Error(`Simulation failed: ${simResult.error}`);
   }
 
-  if (!simResult.result || !simResult.result.retval) {
+  if (!SorobanRpc.Api.isSimulationSuccess(simResult) || !simResult.result) {
     throw new Error("Simulation did not return a value");
   }
 
@@ -66,7 +66,7 @@ export async function contribute(publicKey: string, amount: string) {
   const server = getServer();
   const contract = new Contract(getContractId());
   // Convert to stroops (1 XLM = 10,000,000 stroops)
-  const amountVal = (BigInt(amount) * 10_000_000n).toString();
+  const amountVal = (BigInt(amount) * BigInt("10000000")).toString();
   const op = contract.call(
     "contribute",
     ...[
@@ -75,8 +75,7 @@ export async function contribute(publicKey: string, amount: string) {
     ],
   );
 
-  const accountResponse = await server.getAccount(publicKey);
-  const sourceAccount = new Account(publicKey, accountResponse.sequence);
+  const sourceAccount = await server.getAccount(publicKey);
 
   let tx = new TransactionBuilder(sourceAccount, {
     fee: "100",
@@ -102,8 +101,7 @@ export async function claimFunds(publicKey: string) {
   const contract = new Contract(getContractId());
   const op = contract.call("claim");
 
-  const accountResponse = await server.getAccount(publicKey);
-  const sourceAccount = new Account(publicKey, accountResponse.sequence);
+  const sourceAccount = await server.getAccount(publicKey);
 
   let tx = new TransactionBuilder(sourceAccount, {
     fee: "100",
@@ -129,8 +127,7 @@ export async function withdrawFunds(publicKey: string) {
   const contract = new Contract(getContractId());
   const op = contract.call("withdraw", ...[new Address(publicKey).toScVal()]);
 
-  const accountResponse = await server.getAccount(publicKey);
-  const sourceAccount = new Account(publicKey, accountResponse.sequence);
+  const sourceAccount = await server.getAccount(publicKey);
 
   let tx = new TransactionBuilder(sourceAccount, {
     fee: "100",

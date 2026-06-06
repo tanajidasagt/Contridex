@@ -55,7 +55,7 @@ export async function signAndSubmitTransaction(
 
   if (sendResponse.status === "ERROR") {
     throw new Error(
-      `Transaction submitted with error: ${sendResponse.errorResultXdr || ""}`,
+      `Transaction submitted with error: ${sendResponse.errorResult?.toXDR("base64") || ""}`,
     );
   }
 

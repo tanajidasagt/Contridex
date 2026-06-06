@@ -2,6 +2,11 @@
 
 StellarCrowd is a Kickstarter-style crowdfunding dApp built on the Stellar network using Soroban smart contracts. It enables project creators to deploy a campaign with a specific XLM funding goal and a deadline. Users can back the project using their Freighter wallet. If the goal is met before the deadline, the project creator can claim the collected funds. If the deadline passes and the goal is not met, contributors can safely withdraw their refunded XLM.
 
+## Deployed Contract Information
+
+- **Contract ID**: `CCTCR347WON2A6MG4SJWQCQX2PWTIAWXA7EB26XT4MELPW5A43SI7C62`
+- **Explorer Link**: [Stellar.expert Testnet Contract](https://stellar.expert/explorer/testnet/contract/CCTCR347WON2A6MG4SJWQCQX2PWTIAWXA7EB26XT4MELPW5A43SI7C62)
+
 ## Tech Stack
 - Rust / Soroban SDK (Smart Contracts)
 - Next.js 14 (Frontend App Router)
@@ -68,16 +73,26 @@ stellar contract invoke \
 Note: `CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCYSC` is the native XLM token address on Testnet.
 
 ## Step 4 — Install Frontend Dependencies
+
+At the root directory of the project, run:
+
 ```bash
-cd ../frontend
 npm install
 ```
 
 ## Step 5 — Configure Environment Variables
+
+Copy the example environment file:
+
 ```bash
-cp .env.example .env.local
+cp .env.example .env
 ```
-Open `.env.local` and paste the Contract ID from Step 3 into `NEXT_PUBLIC_CONTRACT_ID`.
+
+Open `.env` and paste the deployed Contract ID into `NEXT_PUBLIC_CONTRACT_ID`.
+
+```env
+NEXT_PUBLIC_CONTRACT_ID=CCTCR347WON2A6MG4SJWQCQX2PWTIAWXA7EB26XT4MELPW5A43SI7C62
+```
 
 ## Step 6 — Run the Frontend
 ```bash

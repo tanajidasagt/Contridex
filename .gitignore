@@ -1,0 +1,12 @@
+node_modules/
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+contracts/target/
+.DS_Store
+.next/
+dist/
+out/
+build/
